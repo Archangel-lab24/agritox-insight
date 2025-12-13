@@ -1,11 +1,11 @@
 
 from fastapi import FastAPI, Query
-from utils.detect_query_type import detect_query_type
-from utils.resolve_product import resolve_product_name
-from utils.fetch_pubchem import fetch_pubchem
-from utils.fetch_epa import fetch_epa
-from utils.summarizer import summarize
-from utils.exporter import export_markdown
+from detect_query_type import detect_query_type
+from resolve_product import resolve_product_name
+from fetch_pubchem import fetch_pubchem
+from fetch_epa import fetch_epa
+from summarizer import summarize
+from exporter import export_markdown
 
 app = FastAPI(title="AgriTox Insight")
 
