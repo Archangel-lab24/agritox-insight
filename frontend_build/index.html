@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AgriTox Insight</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; background: #f5f5f5; }
+    .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    input { width: 100%; padding: 10px; margin-bottom: 10px; font-size: 16px; border-radius: 4px; border: 1px solid #ccc; }
+    button { padding: 10px 20px; font-size: 16px; border-radius: 4px; border: none; background: #007bff; color: white; cursor: pointer; }
+    button:hover { background: #0056b3; }
+    pre { background: #f0f0f0; padding: 10px; border-radius: 4px; overflow-x: auto; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>AgriTox Insight</h1>
+    <input id="queryInput" type="text" placeholder="Enter product or active ingredient" />
+    <button onclick="analyze()">Analyze</button>
+    <h2>Result:</h2>
+    <pre id="result">{}</pre>
+  </div>
+
+  <script>
+    async function analyze() {
+      const query = document.getElementById('queryInput').value.trim();
+      if (!query) return alert("Please enter a query");
+
+      const resultEl = document.getElementById('result');
+      resultEl.textContent = "Loading...";
+
+      try {
+        const res = await fetch(`/analyze?query=${encodeURIComponent(query)}`);
+        if (!res.ok) throw new Error(`Server error: ${res.status}`);
+        const data = await res.json();
+        resultEl.textContent = JSON.stringify(data, null, 2);
+      } catch (err) {
+        resultEl.textContent = `Error: ${err.message}`;
+      }
+    }
+  </script>
+</body>
+</html>
