@@ -1,4 +1,4 @@
-
+import httpx
 from fastapi import FastAPI, Query
 from detect_query_type import detect_query_type
 from resolve_product import resolve_product_name
@@ -9,6 +9,25 @@ from exporter import export_markdown
 
 app = FastAPI(title="AgriTox Insight")
 
+API_TESTS = {
+    "Google": "https://www.google.com",
+    "PubChem": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/glyphosate/JSON",
+    "EPA": "https://www.epa.gov/pesticide-registration",
+    "ECHA": "https://echa.europa.eu/information-on-chemicals"
+}
+
+@app.get("/test-apis")
+async def test_apis():
+    results = {}
+    async with httpx.AsyncClient(timeout=5) as client:
+        for name, url in API_TESTS.items():
+            try:
+                r = await client.get(url)
+                results[name] = {"status": "reachable", "status_code": r.status_code}
+            except Exception as e:
+                results[name] = {"status": "failed", "error": str(e)}
+    return results
+    
 @app.get("/analyze")
 async def analyze(query: str = Query(..., description="Product or active ingredient name")):
     qtype = detect_query_type(query)
