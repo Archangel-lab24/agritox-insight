@@ -3,7 +3,7 @@ from fastapi import FastAPI, Query
 from detect_query_type import detect_query_type
 from resolve_product import resolve_product_name
 from fetch_pubchem import fetch_pubchem
-from fetch_epa import fetch_epa
+from fetch_echa import fetch_echa
 from summarizer import summarize
 from exporter import export_markdown
 
@@ -12,7 +12,6 @@ app = FastAPI(title="AgriTox Insight")
 API_TESTS = {
     "Google": "https://www.google.com",
     "PubChem": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/glyphosate/JSON",
-    "EPA": "https://www.epa.gov/pesticide-registration",
     "ECHA": "https://echa.europa.eu/information-on-chemicals"
 }
 
@@ -38,9 +37,9 @@ async def analyze(query: str = Query(..., description="Product or active ingredi
         active, resolution = await resolve_product_name(query)
 
     pubchem = await fetch_pubchem(active)
-    epa = await fetch_epa(active)
+    echa = await fetch_echa(active)
 
-    summary = summarize(pubchem, epa)
+    summary = summarize(pubchem, echa)
 
     return {
         "query": query,
