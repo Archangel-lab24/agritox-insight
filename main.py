@@ -1,5 +1,6 @@
 import httpx
 from fastapi import FastAPI, Query
+from fastapi.staticfiles import StaticFiles
 from detect_query_type import detect_query_type
 from resolve_product import resolve_product_name
 from fetch_pubchem import fetch_pubchem
@@ -8,6 +9,8 @@ from summarizer import summarize
 from exporter import export_markdown
 
 app = FastAPI(title="AgriTox Insight")
+
+app.mount("/", StaticFiles(directory="frontend_build", html=True), name="frontend")
 
 API_TESTS = {
     "Google": "https://www.google.com",
