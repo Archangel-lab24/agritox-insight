@@ -9,6 +9,8 @@ from fetch_echa import fetch_echa
 from summarizer import summarize
 from exporter import export_markdown
 
+print("🔥 AGRITOX MAIN LOADED 🔥")
+
 app = FastAPI(title="AgriTox Insight")
 
 @app.get("/")
