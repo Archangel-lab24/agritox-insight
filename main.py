@@ -9,8 +9,6 @@ from fetch_echa import fetch_echa
 from summarizer import summarize
 from exporter import export_markdown
 
-raise RuntimeError("🔥 IF YOU SEE THIS, MAIN.PY IS EXECUTED 🔥")
-
 app = FastAPI(title="AgriTox Insight")
 
 @app.get("/")
