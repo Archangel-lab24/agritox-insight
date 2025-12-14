@@ -41,7 +41,16 @@ async def analyze(query: str = Query(..., description="Product or active ingredi
 
     if qtype == "product":
         active, resolution = await resolve_product_name(query)
-
+        if not active:
+            # Fallback if resolver fails
+            return {
+                "query": query,
+                "query_type": qtype,
+                "active_ingredient": None,
+                "resolution": resolution,
+                "summary": {"note": "Could not resolve active ingredient automatically"}
+            }
+            
     pubchem = await fetch_pubchem(active)
     echa = await fetch_echa(active)
 
