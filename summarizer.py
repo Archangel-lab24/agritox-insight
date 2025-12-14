@@ -1,6 +1,12 @@
 # summarizer.py
 import re
 
+def summarize(pubchem_data, echa_data):
+    return {
+        "__DEBUG__": "IF YOU SEE THIS, SUMMARIZER IS RUNNING",
+        "echa_received": echa_data,
+    }
+    
 # Mapping of hazard codes/statements to readable toxicity levels
 MAMMALIAN_TOXICITY_MAP = {
     "H300": "Fatal if swallowed",
