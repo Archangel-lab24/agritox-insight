@@ -1,7 +1,10 @@
 
-fastapi
-uvicorn
-httpx
-pandas
-fpdf2
-python-multipart
+fastapi==0.111.1
+uvicorn==0.23.2
+httpx==0.26.1
+pandas==2.1.1
+fpdf2==2.5.5
+python-multipart==0.0.6
+beautifulsoup4==4.12.2
+lxml==4.9.3
+
